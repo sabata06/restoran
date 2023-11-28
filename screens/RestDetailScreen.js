@@ -25,13 +25,13 @@ export default function RestDetailScreen({ route }) {
       <Text style={styles.title}>{result.name}</Text>
       <Text style={styles.phone}>{result.phone}</Text>
       <View style={styles.icon}>
-      {result.is_closed ? (
-        <FontAwesome5 name="door-closed" size={30} color="black" />
-      ) : (
-        <FontAwesome5 name="door-open" size={30} color="black" />
-      )}
+        {result.is_closed ? (
+          <FontAwesome5 name="door-closed" size={30} color="black" />
+        ) : (
+          <FontAwesome5 name="door-open" size={30} color="black" />
+        )}
       </View>
-     
+
       <FlatList
         data={result.photos}
         renderItem={({ item }) => {
@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: 20,
   },
-  icon:{
-    alignSelf:"center",
-    marginTop:5
-  }
+  icon: {
+    alignSelf: "center",
+    marginTop: 5,
+  },
 });

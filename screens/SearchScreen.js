@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import SearchBar from "../components/SearchBar";
 import useResult from "../hooks/useResult";
 import ResultsList from "../components/ResultsList";
 
 export default function SearchScreen() {
-  const [searchApi, results] = useResult();
+  const [searchApi, results, errorMsg] = useResult();
+  const [term, setTerm] = useState("");
   // console.log(results);
   const filterResultsByPrice = (price) => {
     return results.filter((result) => {
@@ -14,19 +15,35 @@ export default function SearchScreen() {
   };
   return (
     <View>
-      <SearchBar />
-      <ResultsList
-        title="Ucuz Restorantlar"
-        results={filterResultsByPrice("₺")}
+      <SearchBar
+        term={term}
+        onTermChange={setTerm}
+        onTermSubmit={() => searchApi(term)}
       />
-      <ResultsList
-        title="Uygun Restorantlar"
-        results={filterResultsByPrice("₺₺")}
-      />
-      <ResultsList
-        title="Pahalı Restorantlar"
-        results={filterResultsByPrice("₺₺₺")}
-      />
+      {errorMsg ? (
+        <Text>{errorMsg}</Text>
+      ) : (
+        <>
+          {results.length == 0 ? (
+            <Text>Restoran Bulunamadı</Text>
+          ) : (
+            <>
+              <ResultsList
+                title="Ucuz Restoranlar"
+                results={filterResultsByPrice("₺")}
+              />
+              <ResultsList
+                title="Uygun Restoranlar"
+                results={filterResultsByPrice("₺₺")}
+              />
+              <ResultsList
+                title="Pahalı Restoranlar"
+                results={filterResultsByPrice("₺₺₺")}
+              />
+            </>
+          )}
+        </>
+      )}
     </View>
   );
 }
